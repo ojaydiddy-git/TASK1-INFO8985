@@ -44,18 +44,22 @@ receivers:
       disk: {}
       filesystem: {}
       network: {}
-  prometheus:
+    prometheus:
     config:
       global:
         scrape_interval: 60s
       scrape_configs:
-        # otel-collector internal metrics
         - job_name: otel-collector
           static_configs:
           - targets:
               - localhost:8888
             labels:
               job_name: otel-collector
+        - job_name: postgresql
+          static_configs:
+            - targets: ['localhost:9187']
+          metrics_path: /metrics
+
 
 
 processors:
